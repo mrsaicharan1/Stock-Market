@@ -1,74 +1,65 @@
 
-
-
 #include <stdio.h>
-#include <string.h>
+#include <stdint.h>
 
-int main(int argc, char* argv[])
-{
+typedef uint8_t BYTE;
+
+int main(void)
+{   
     
-    FILE* infile;
-    infile = fopen("card.raw", "r");
-
-
-
-    char buf[512] = {0};                    
-    char jpeg[4] = {0xff, 0xd8, 0xff, 0xe0};    
-    char jpeg2[4] ={0xff, 0xd8, 0xff, 0xe1};    
+    FILE* fl = fopen("card.raw", "r");
     
-    char filename[30];                          
-    int filenumber = 0;                         
-    FILE* outfile;                          
-    int c = 0;
-
-    while (c != EOF) {
-
-     
-        for (int v = 0; v < 512; v++) {
-            buf[v] = c = fgetc(infile);
-        }
-
-        if (memcmp(buf, jpeg, 4) == 0||memcmp(buf,jpeg2,4)==0 ) {
-            if (outfile)
-        {    
-            fclose(outfile);
-}
-if (!outfile) {
-                printf("Error \n");
-                return 1;
-}
-            
-               if (!outfile) {
-                printf("Error \n");
-                return 1;
-}
-            int name;
-            filenumber++;
-            name = sprintf(filename, "%03d.jpg", filenumber);
-
-            
-            outfile = fopen(filename, "w");
-
-          
-            fwrite(buf, 1, 512, outfile);
-
-        } else if (outfile) {
-
-           
-            fwrite(buf, 1, 512, outfile);
-        }
+    
+    if (fl == NULL)
+    {
+        fclose(fl); 
+        printf("unable to recover file  \n");
+        return 1;
     }
 
     
-    fclose(infile);
-    if (outfile){ 
-        fclose(outfile);
+    int counter = 0; 
+   
+    
+    BYTE buffer[512];
+   
+    
+    char lname[10]; 
+ FILE* temp = NULL; 
+    
+    
+    while (!feof(fl))
+    {
+       
+            if (buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && (buffer[3] == 0xe0 || buffer[3] == 0xe1))
+        {
+        if (temp != NULL)
+            {
+                fclose(temp);
+                
+            }
+            
+        sprintf(lname, "%03d.jpg", counter);
+            
+                temp = fopen(lname, "w");
+            
+                    counter++;
+        
+    fwrite(buffer, sizeof(buffer), 1, temp);
+        }
+        else if (counter > 0)
+        {            fwrite(buffer, sizeof(buffer), 1, temp);            
+            
+        }
+      
+        fread(buffer, sizeof(buffer), 1, fl);
         
     }
+  
+    
+    // close the file
+    fclose(fl);
 
-    printf("Done.\n");
-
+    // that's all folks
     return 0;
 }
-
-
