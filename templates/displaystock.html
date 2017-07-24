@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block head %}
+Stock Info
+{% endblock %}
+{% for name,price,symbol in stockdict %}
+<table>
+    <tr>{{name}}</tr>
+    <tr>{{price}}</tr>
+    <tr>{{symbol}}</tr>
+</table>
+{% endfor %}
+

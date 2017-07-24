@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block title %}
+Stock Lookup
+{% endblock %}
+{% block main %}
+<form action="127.0.0.1:5000/quote" method='POST'>
+    <input type=text name='stocksymbol'>
+    <input type=submit value='SUBMIT'>
+</form>
+{% endblock %}

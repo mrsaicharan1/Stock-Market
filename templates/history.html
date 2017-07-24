@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block head %}
+Transacation History
+{% endblock %}
+{% for transcation in history %}
+<ol>
+    <li>{{transaction.symbol}}--{{transaction.quantity}}--{{transaction.price}}</li>
+</ol>
+{% endfor %}

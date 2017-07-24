@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block title %}
+Share purchase
+{% endblock %}
+{% block main %}
+<form action="127.0.0.1:5000/buy" method='POST'>
+    <input type=text name="stocksymbol">
+    <input type=number name="shares">
+    <input type=submit value='SUBMIT'>
+</form>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% block title %}
+INDEX
+{% endblock %}
+{% block head %}
+HOMEPAGE
+{% endblock %}
+{% block body %}
+<table>
+    {% for symbol,quantity,price in stockdict%}
+    
+        <tr>{{symbol}}</tr>
+        <tr>{{quantity}}</tr>
+        <tr>{{price}}</tr>
+    total_value+={{price}}
+    grand_total= total_value+cash_total
+
+{% endfor %}
+{{total_value}}
+{{grand_total}}
+ 
+    
+</table>
+{% endblock %}
+
